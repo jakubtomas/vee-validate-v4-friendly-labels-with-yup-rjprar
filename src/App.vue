@@ -1,4 +1,5 @@
 <template>
+  <h3>Form VeeValidate</h3>
   <Form @submit="onSubmit" :validation-schema="schema">
     <label for="email">Your email</label>
     <Field
