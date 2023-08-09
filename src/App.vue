@@ -3,11 +3,13 @@
   <Form
     @submit="onSubmit"
     :validation-schema="schema"
-    v-slot="{ errors, isSubmitting }"
+    v-slot="{ values, errors, isSubmitting }"
   >
     <!-- v-slot="{ errors, isSubmitting, handleSubmit, resetForm, setErrors, setValues } -->
     {{ errors }}
     {{ errors.email_addr }}
+    values
+    <pre>{{ values }}</pre>
     <br />
     {{ isSubmitting }}
     <!-- up code is another way how to display error message 
@@ -54,6 +56,9 @@
     <Field id="password" name="acc_pazzword" type="password" />
     <ErrorMessage name="acc_pazzword" />
 
+    <!--  is possible wo add rules to Field -->
+    <!-- <Field name="email" type="email" :rules="validateEmail" /> -->
+
     <button>Submit</button>
   </Form>
 </template>
@@ -69,6 +74,21 @@ const schema = Yup.object().shape({
 
 function onSubmit(values) {
   alert(JSON.stringify(values, null, 2));
+}
+
+// function for rules Field
+function validateEmail(value) {
+  // if the field is empty
+  if (!value) {
+    return 'This field is required';
+  }
+  // if the field is not a valid email
+  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  if (!regex.test(value)) {
+    return 'This field must be a valid email';
+  }
+  // All is good
+  return true;
 }
 </script>
 
