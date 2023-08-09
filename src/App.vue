@@ -1,6 +1,19 @@
 <template>
   <h3>Form VeeValidate</h3>
-  <Form @submit="onSubmit" :validation-schema="schema">
+  <Form
+    @submit="onSubmit"
+    :validation-schema="schema"
+    v-slot="{ errors, isSubmitting }"
+  >
+    <!-- v-slot="{ errors, isSubmitting, handleSubmit, resetForm, setErrors, setValues } -->
+    {{ errors }}
+    {{ errors.email_addr }}
+    <br />
+    {{ isSubmitting }}
+    <!-- up code is another way how to display error message 
+    v slot have function and data  -->
+    ------------------------------------------
+
     <label for="email">Your email</label>
     <Field
       name="email_addr"
@@ -9,15 +22,33 @@
       v-slot="{ field, errorMessage, meta }"
     >
       <input v-bind="field" />
+      Field
+      <span>{{ field }}</span>
+      <br />
+      ErrorMessage
+      <br />
+      <span>{{ errorMessage }}</span>
+      <br />
+      Meta
+      <pre>{{ meta }}</pre>
+      <br />
+      ---------------------------------------------------
+      <br />
       <span v-if="errorMessage && !meta.valid">⛔️ {{ errorMessage }}</span>
       <span v-if="meta.valid && meta.touched">✅ Field is valid</span>
-      <pre>{{ meta }}</pre>
+      <br />
+      <ErrorMessage name="email_addr" />
+      <br />
+      --------------------------------------------------
     </Field>
-    <ErrorMessage name="email_addr" />
 
     <!-- <label for="email">Your Email</label>
     <Field id="email_addr" name="email_addr" type="email" />
     <ErrorMessage name="email_addr" /> -->
+    <br />
+    -------------------------------------
+    <!-- Every Field  has 3 data , field, erroMessage, meta and with thoses you can work with errorsMesssage -->
+    <!-- Maybe also Form has data like  v-slot="{ errors, isSubmitting }" -->
 
     <label for="password">Your Password</label>
     <Field id="password" name="acc_pazzword" type="password" />
